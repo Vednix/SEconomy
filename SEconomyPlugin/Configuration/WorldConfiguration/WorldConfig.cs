@@ -45,7 +45,7 @@ namespace Wolfje.Plugins.SEconomy.Configuration.WorldConfiguration {
 
 		public decimal MoneyPerDamagePoint = 1.0M;
 
-		public bool IgnoreSpawnedFromStatue = true;
+		//public bool IgnoreSpawnedFromStatue = true;
 		public List<NPCRewardOverride> Overrides = new List<NPCRewardOverride>();
 
 		public WorldConfig()

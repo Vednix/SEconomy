@@ -187,7 +187,7 @@ namespace Wolfje.Plugins.SEconomy
                 return;
             }
 
-            if (((NPC.boss && WorldConfiguration.MoneyFromBossEnabled) || (!NPC.boss && WorldConfiguration.MoneyFromNPCEnabled)) && !(NPC.SpawnedFromStatue && WorldConfiguration.IgnoreSpawnedFromStatue))
+            if (((NPC.boss && WorldConfiguration.MoneyFromBossEnabled) || (!NPC.boss && WorldConfiguration.MoneyFromNPCEnabled)) /*&& !(NPC.SpawnedFromStatue && WorldConfiguration.IgnoreSpawnedFromStatue)*/)
             {
                 foreach (PlayerDamage damage in playerDamageList)
                 {
@@ -368,7 +368,7 @@ namespace Wolfje.Plugins.SEconomy
                 Packets.DamageNPC dmgPacket = Packets.PacketMarshal.MarshalFromBuffer<Packets.DamageNPC>(bufferSegment);
 
                 if (dmgPacket.NPCID < 0 || dmgPacket.NPCID > Terraria.Main.npc.Length
-                    || args.Msg.whoAmI < 0 || dmgPacket.NPCID > Terraria.Main.player.Length)
+                    || args.Msg.whoAmI < 0 || args.Msg.whoAmI > Main.maxPlayers)
                 {
                     return;
                 }
@@ -394,7 +394,7 @@ namespace Wolfje.Plugins.SEconomy
         {
             try
             {
-                if (e.MsgId == PacketTypes.PlayerHurtV2)
+                if (e.MsgId == PacketTypes.PlayerHurt)
                 {
                     //occurs when a player hits another player.  ignoreClient is the player that hit, e.number is the 
                     //player that got hit, and e.number4 is a flag indicating PvP damage
@@ -404,7 +404,7 @@ namespace Wolfje.Plugins.SEconomy
                         PlayerHitPlayer(e.ignoreClient, e.number);
                     }
                 }
-                else if (e.MsgId == PacketTypes.PlayerDeathV2)
+                else if (e.MsgId == PacketTypes.PlayerHurt)
                 {
                     //Occrs when the player dies.
                     ProcessDeath(e.number, Convert.ToBoolean(e.number4));
